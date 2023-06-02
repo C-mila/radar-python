@@ -1,0 +1,23 @@
+elif(unidade=='RhoHV'):
+    cgax, pm = wradlib.vis.plot_ppi(dados, r=alcance, az=azi, fig=figura,
+                                    proj=wradlib.georef.epsg_to_osr(4326),
+                                    site=(float(lon_radar),float(lat_radar),float(alt_radar)),
+                                    elev=float(elevacao),
+                                    cmap=matplotlib.colors.ListedColormap(
+                                        colors=[(0,0,0,0),(0.619,0.909,0.996,1),(0.619,0.800,0.976,1),(0.286,0.615,0.976,1),(0.039,0.458,0.976,1),
+                                                (0.003,0.007,0.960,1),(0,0.878,0,1),(0.992,0.878,0,1),(1,0.839,0.062,1),(1,0.505,0,1),(0.894,0,0,1),
+                                                (0.741,0.125,0.443,1),(0.764,0,0.498,1),(1,0,0.980,1)]),
+                                    norm=matplotlib.colors.BoundaryNorm(boundaries=[0,0.14,0.28,0.42,0.56,0.70,0.79,0.8,0.94,0.97,0.98,0.99,1],
+                                                                        ncolors=16, extend='neither'))
+
+    titulo = "{0} {1}    {2}    {3}    PPI {4}°\nLat {5}°    Lon {6}°".format(
+        tiposensor, nomesensor, data, hora, elevacao, lat_radar, lon_radar)
+
+    t = matplotlib.pyplot.title(label=titulo, fontsize=12, pad=20, loc='center')
+    t.set_y(1.1)
+    # cgax = os eixos curvilineos (grade r-theta); pm = o resultado da funcao de plot
+    caax = cgax  # .parasites[0]  # transformar eixos polares em cartesianos
+    eixoescala = inset_axes(caax, loc='right', width="3%", height="100%", borderpad=-4.5)
+    cbar = matplotlib.pyplot.gcf().colorbar(pm, cax=eixoescala, orientation="vertical", ticks=[0,0.14,0.28,0.42,0.56,0.70,0.79,0.8,0.94,0.97,0.98,0.99,1])
+    cbar.set_label("Coeficiente de correlaçã")
+#velocidade radial
